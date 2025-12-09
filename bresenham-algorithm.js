@@ -28,27 +28,27 @@ function createImageData() {
     return new Array(length).fill(false);
 }
 function drawCircle(cx, cy, radius) {
-    // Converte para inteiros se necessário
+    // Convert to integer if necessary
     const centerX = Math.round(cx);
     const centerY = Math.round(cy);
     let r = Math.round(radius);
     let x = 0;
     let y = r;
-    let d = 3 - 2 * r; // decisão inicial
-    // Função auxiliar para desenhar os 8 pontos simétricos
+    let d = 3 - 2 * r; // initial decision
+    // Auxiliar function to draw the 8 simetric points
     function draw8Pixels(x, y) {
         drawDot(centerX + x, centerY + y);
         drawDot(centerX - x, centerY + y);
         drawDot(centerX + x, centerY - y);
         drawDot(centerX - x, centerY - y);
-        if (x !== y) { // evita desenhar duas vezes nos diagonais
+        if (x !== y) { // avoid drawing twice in diagonals
             drawDot(centerX + y, centerY + x);
             drawDot(centerX - y, centerY + x);
             drawDot(centerX + y, centerY - x);
             drawDot(centerX - y, centerY - x);
         }
     }
-    // Desenha os eixos primeiro (opcional, mas evita falhas em r pequeno)
+    // Draws the axis first (optional, but avoid flaws at small r)
     drawDot(centerX + r, centerY);
     drawDot(centerX - r, centerY);
     drawDot(centerX, centerY + r);
@@ -105,5 +105,20 @@ function outputImage(onChar = "X", offChar = " ") {
     }
     console.log(text);
 }
-drawCircle(4, 4, 3);
-outputImage();
+function main() {
+    const args = process.argv.slice(2);
+    if (args.length !== 3) {
+        console.log('Usage: node index.js <cx> <cy> <radius>');
+        process.exit(1);
+    }
+    const cx = Number(args[0]);
+    const cy = Number(args[1]);
+    const radius = Number(args[2]);
+    if (isNaN(cx) || isNaN(cy) || isNaN(radius)) {
+        console.log('Arguments must be valid numbers!');
+        process.exit(1);
+    }
+    drawCircle(cx, cy, radius);
+    outputImage();
+}
+main();

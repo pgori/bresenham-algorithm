@@ -116,5 +116,26 @@ function outputImage(onChar = "X", offChar = " ") {
     console.log(text);
 }
 
-drawCircle(4,4,3);
-outputImage();
+function main() {
+
+  const args = process.argv.slice(2);
+
+  if (args.length !== 3) {
+    console.log('Usage: node index.js <cx> <cy> <radius>');
+    process.exit(1); 
+  }
+
+  const cx = Number(args[0]);
+  const cy = Number(args[1]);
+  const radius = Number(args[2]);
+
+  if (isNaN(cx) || isNaN(cy) || isNaN(radius)) {
+    console.log('Arguments must be valid numbers!');
+    process.exit(1);
+  }
+
+  drawCircle(cx,cy,radius);
+  outputImage();
+}
+
+main();
